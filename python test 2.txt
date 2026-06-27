@@ -1,0 +1,142 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.patches as patches
+
+# --- 1. AYARLAR VE TASARIM (SETUP) ---
+# Akademik ve temiz bir gorunum icin 'default' stili kullaniyoruz.
+# Arka plan beyaz, yazi tipleri standart.
+plt.style.use('default')
+
+def professional_volumetric_simulation():
+    # --- PARAMETRELER (PARAMETERS) ---
+    # Robotun fiziksel ozellikleri
+    segment_count = 40      # Pürüzsüz bir hortum gorunumu icin parca sayisi yuksek
+    arm_length = 100        # Robotun toplam uzunlugu (mm)
+    base_radius = 6.0       # Taban yari capi (Kalinlik)
+    taper_ratio = 0.4       # Uc kisim tabanin %40'i kadar ince olsun (Koniklik)
+    
+    # Pencere Tasarimi: 
+    # Sol taraf: Robotun kendisi (Simulasyon)
+    # Sag taraf: Muhendislik Verisi (Grafik)
+    fig, (ax_sim, ax_data) = plt.subplots(1, 2, figsize=(14, 7), gridspec_kw={'width_ratios': [1.5, 1]})
+    
+    # Arka plan hafif kirik beyaz (Gözü yormaz, kagit hissi verir)
+    fig.patch.set_facecolor('#FAFAFA')
+    ax_sim.set_facecolor('#FAFAFA')
+    ax_data.set_facecolor('#FAFAFA')
+
+    # --- 2. HAREKET SENARYOSU (MOTION SCENARIO) ---
+    # Robotun hareket ettigi 3 farkli ani cizecegiz.
+    # 1. Adim: 30 derece (Hafif bukulme)
+    # 2. Adim: 90 derece (Yarim bukulme)
+    # 3. Adim: 160 derece (Tam bukulme - Son Durum)
+    bend_scenarios = [30, 90, 160]
+    
+    # Renk Paleti: "Steel Blue" tonlari (Profesyonel Mavi)
+    # Ilk adimlar silik (acik gri-mavi), son adim koyu ve net (lacivert)
+    colors = ['#B0C4DE', '#778899', '#2F4F4F'] # LightSteelBlue -> LightSlateGray -> DarkSlateGray
+
+    print("Simulasyon render aliniyor (Lutfen bekleyin)...")
+
+    # --- 3. HESAPLAMA VE CIZIM DONGUSU ---
+    for step_index, total_angle_deg in enumerate(bend_scenarios):
+        
+        # Kinematik Hesaplama Baslangiclari
+        current_x = 0
+        current_y = 0
+        current_theta = np.radians(90) # Dik basla (90 derece)
+        
+        # Koordinatlari saklayacagimiz listeler
+        x_coords = [0]
+        y_coords = [0]
+        radii_list = [] # Her parçanin kalinligi
+        
+        # Tek bir parcanin uzunlugu
+        segment_len = arm_length / segment_count
+        # Her parca basina dusen aci degisimi
+        angle_per_segment = np.radians(total_angle_deg) / segment_count
+        
+        # --- ROBOTU INSA ETME (KINEMATIK) ---
+        for i in range(segment_count):
+            # Aciyi guncelle (Bukulme)
+            current_theta += angle_per_segment
+            
+            # Yeni pozisyonu hesapla (Trigonometri)
+            current_x += segment_len * np.cos(current_theta)
+            current_y += segment_len * np.sin(current_theta)
+            
+            x_coords.append(current_x)
+            y_coords.append(current_y)
+            
+            # Kalinlik Hesabi: Tabandan uca dogru dogrusal azalma
+            # r = r_base - (i * azalma_miktari)
+            r_current = base_radius * (1 - (1 - taper_ratio) * (i / segment_count))
+            radii_list.append(r_current)
+            
+        # --- SOL GRAFIK: GORSELLESTIRME (DAIRELERLE CIZIM) ---
+        # Bu kisim istedigin "ilk sekildeki daireler" mantigi
+        
+        # Hangi renkle cizecegiz?
+        step_color = colors[step_index]
+        step_alpha = 0.4 if step_index < len(bend_scenarios)-1 else 1.0 # Eskiler seffaf olsun
+        
+        # Robot Govdesi (Hortum Yapisi)
+        for j in range(len(x_coords)-1):
+            # Daire (Circle) nesnesi olustur
+            circle = patches.Circle(
+                (x_coords[j], y_coords[j]), # Merkez
+                radii_list[j],              # Yaricap
+                color=step_color, 
+                alpha=step_alpha,
+                linewidth=0 # Kenar cizgisi olmasin, pürüzsüz olsun
+            )
+            ax_sim.add_patch(circle)
+            
+        # --- SAG GRAFIK: MUHENDISLIK VERISI ---
+        # "Egrilik Yayilimi" (Curvature Propagation) grafigi
+        # X ekseni: Robot uzunlugu (Normalize), Y ekseni: Aci
+        normalized_len = np.linspace(0, 1, segment_count + 1)
+        curvature_vals = np.linspace(0, total_angle_deg, segment_count + 1)
+        
+        ax_data.plot(normalized_len, curvature_vals, 
+                     color=step_color, 
+                     linewidth=2, 
+                     marker='o', markersize=3, markevery=5,
+                     label=f'Load Case: {total_angle_deg} deg')
+
+        # Son adimda ozel isaretler ekle (Base ve Tip)
+        if step_index == len(bend_scenarios) - 1:
+            # Uç Nokta (End Effector)
+            ax_sim.scatter(x_coords[-1], y_coords[-1], color='#8B0000', s=50, zorder=10, label='End Effector')
+            # Omurga cizgisi (Dairelerin icinden gecen ince beyaz cizgi)
+            ax_sim.plot(x_coords, y_coords, color='white', linewidth=1, alpha=0.5, linestyle='--')
+
+    # --- 4. GRAFIK AYARLARI VE SUSLEMELER ---
+    
+    # SOL TARAF (SIMULASYON)
+    ax_sim.set_aspect('equal')
+    ax_sim.set_title("Continuum Robot Simulation\n(Constant Curvature Model)", fontsize=12, fontweight='bold', pad=15)
+    ax_sim.set_xlabel("X Position [mm]", fontsize=9, color='#555555')
+    ax_sim.set_ylabel("Y Position [mm]", fontsize=9, color='#555555')
+    ax_sim.grid(True, linestyle=':', alpha=0.6) # Hafif izgara
+    
+    # Zemin cizgisi
+    ax_sim.plot([-20, 20], [0, 0], color='black', linewidth=3)
+    ax_sim.text(0, -5, "FIXED BASE", ha='center', va='top', fontsize=8, fontweight='bold')
+    
+    # SAG TARAF (VERI GRAFIGI)
+    ax_data.set_title("Kinematic Performance Analysis", fontsize=12, fontweight='bold', pad=15)
+    ax_data.set_xlabel("Normalized Length (L/L_total)", fontsize=10)
+    ax_data.set_ylabel("Bending Angle (Degrees)", fontsize=10)
+    ax_data.grid(True, linestyle='--', alpha=0.5)
+    ax_data.legend(fontsize=9, loc='upper left')
+    
+    # Grafige "Akademik" hava katan cerceve ayarlari
+    for spine in ax_data.spines.values():
+        spine.set_edgecolor('#555555')
+
+    plt.tight_layout()
+    plt.show()
+
+if __name__ == "__main__":
+    professional_volumetric_simulation()
