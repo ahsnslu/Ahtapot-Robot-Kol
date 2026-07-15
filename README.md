@@ -68,6 +68,8 @@ python spiro_robot_sim.py --angle 540 --segments 35 --ratio 0.93
 
 👥 Geliştirici & Araştırmacı
 Ahsen Uslu - Mekatronik Mühendisliği, Erciyes Üniversitesi
+
+
 <img width="1075" height="587" alt="image" src="https://github.com/user-attachments/assets/7c1fcfab-28d8-4b08-b279-392a0993c069" />
 
 
