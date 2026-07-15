@@ -6,6 +6,7 @@ kinematik denklemlerini ve simülasyon algoritmalarını içermektedir.
 ⚠️ Önemli Not: Bu çalışma, Türkiye'de akademik veya endüstriyel düzeyde daha önce benzeri gerçekleştirilmemiş öncü bir Continuum Robotik projesidir.
 Dünya genelinde ise yalnızca MIT, Harvard ve Stanford gibi lider kurumların ileri düzey robotik laboratuvarlarında araştırılan bu karmaşık sistemi;
 mekanik tasarımdanmatematiksel modellemeye ve yazılıma kadar tüm disiplinleriyle tek başıma çalışarak hayata geçirdim.
+<img width="2272" height="1856" alt="Gemini_Generated_Image_5nce695nce695nce" src="https://github.com/user-attachments/assets/168bceef-34c9-4bb2-88f3-f735ce9dfe3c" />
 
 
 📌 Projenin Öne Çıkan Özellikleri & Teknik ÖzgünlükÖncü Biyomimetik Yaklaşım: Rijit (geleneksel eklemli) robot kollarının aksine, sıfır rijit eklem ile sürekli 
