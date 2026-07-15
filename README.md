@@ -23,21 +23,20 @@ Logaritmik Spiral (Spiro) Simülasyonu (spiro_robot_sim.py):Boyutları ve segmen
 📐 Kinematik Modeller ve Matematiksel AltyapıSürekli esnek (continuum) robotlar, klasik D-H parametreleri ve kartezyen eklem matrisleri ile modellenemezler. Bu projede kullanılan matematiksel çözümler:1. Sabit Eğrilikli Kinematik Model (Constant-Curvature Model)Esnek gövde, N adet sonlu alt segmente bölünür. Toplam bükülme açısı theta, her segmente homojen dağıtılarak lokal eğrilik açısı Delta theta elde edilir:
 
 
-                                       <img width="231" height="117" alt="image" src="https://github.com/user-attachments/assets/55985094-38b0-4fcb-bb44-766ee1832b91" />
+   <img width="231" height="117" alt="image" src="https://github.com/user-attachments/assets/55985094-38b0-4fcb-bb44-766ee1832b91" />
 
 Her segmentin yönelimi (heading angle) birikimli olarak hesaplanır:
 
                                             
-                                        <img width="252" height="132" alt="image" src="https://github.com/user-attachments/assets/d824e2f1-8b2e-4d85-8fde-2ad51c5fde32" />
+   <img width="252" height="132" alt="image" src="https://github.com/user-attachments/assets/d824e2f1-8b2e-4d85-8fde-2ad51c5fde32" />
                                         
 Segmentlerin dış yarıçapı R_i, tabandan Rbase uca doğru lineer olarak daralarak gerçekçi bir konik form oluşturur:
 
-                                        <img width="532" height="150" alt="image" src="https://github.com/user-attachments/assets/75ec335a-db99-4ea0-9b4b-b3f4d60cae53" />
+   <img width="532" height="150" alt="image" src="https://github.com/user-attachments/assets/75ec335a-db99-4ea0-9b4b-b3f4d60cae53" />
 
 
 2. Logaritmik Spiral Model (Logarithmic-Spiral Continuum)Doğal ahtapot kollarının sarmal büzülme mekanizması, segment uzunluklarının (L_i) ve çaplarının (D_i) sabit bir geometrik sönüm çarpanı (r < 1) ile küçülmesi esasına dayanır:
-
-                                        <img width="247" height="207" alt="image" src="https://github.com/user-attachments/assets/d3706c68-2226-467f-9e40-c7ca74bba3fb" />
+  <img width="247" height="207" alt="image" src="https://github.com/user-attachments/assets/d3706c68-2226-467f-9e40-c7ca74bba3fb" />
 
 
 🛠 SolidWorks 3D CAD Mekanik Tasarımı
@@ -45,7 +44,7 @@ Projenin fiziksel prototip altyapısını oluşturan SolidWorks montaj dosyalar�
 
 Segmentli Esnek Omurga (Vertebrae): Robotun bükülme esnasında aşırı burulmasını (torsiyon) engelleyen, esneklik limiti yüksek, birbirine geçmeli kanal diskleri.
 
-Tendon Kılavuz Kanalları: Disklerin çevrelerine $120^\circ$ açılarla yerleştirilen kılavuz delikler, tahrik motorlarından gelen çelik tellerin (tendonların) minimum sürtünmeyle geçmesini sağlar.
+Tendon Kılavuz Kanalları: Disklerin çevrelerine 120 açılarla yerleştirilen kılavuz delikler, tahrik motorlarından gelen çelik tellerin (tendonların) minimum sürtünmeyle geçmesini sağlar.
 
 Konik Daralan Geometri: Gövdenin uca doğru incelmesi, uç efektörün hassas kontrolünü sağlarken tabandaki motorların statik yükünü hafifletir.
 
