@@ -20,7 +20,8 @@ Sabit Eğrilik (Constant Curvature)Simülasyonu (continuum_robot_sim.py): Doğru
 
 Logaritmik Spiral (Spiro) Simülasyonu (spiro_robot_sim.py):Boyutları ve segment uzunlukları geometrik bir oranla sönümlenen (decay_ratio), kendi üzerine tam turlarla katlanabilen sarmal manipülatör modelidir.
 
-📐 Kinematik Modeller ve Matematiksel AltyapıSürekli esnek (continuum) robotlar, klasik D-H parametreleri ve kartezyen eklem matrisleri ile modellenemezler. Bu projede kullanılan matematiksel çözümler:1. Sabit Eğrilikli Kinematik Model (Constant-Curvature Model)Esnek gövde, N adet sonlu alt segmente bölünür. Toplam bükülme açısı theta, her segmente homojen dağıtılarak lokal eğrilik açısı Delta theta elde edilir:
+📐 Kinematik Modeller ve Matematiksel AltyapıSürekli esnek (continuum) robotlar, klasik D-H parametreleri ve kartezyen eklem matrisleri ile modellenemezler. Bu projede kullanılan matematiksel çözümler:
+1. Sabit Eğrilikli Kinematik Model (Constant-Curvature Model)Esnek gövde, N adet sonlu alt segmente bölünür. Toplam bükülme açısı theta, her segmente homojen dağıtılarak lokal eğrilik açısı Delta theta elde edilir:
 
 
    <img width="231" height="117" alt="image" src="https://github.com/user-attachments/assets/55985094-38b0-4fcb-bb44-766ee1832b91" />
